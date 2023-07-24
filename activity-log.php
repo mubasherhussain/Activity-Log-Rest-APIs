@@ -48,17 +48,16 @@ function getActivityLog(WP_REST_Request $request)
         return new WP_Error('Validation failed!', __('Validation failed for required field: [`page`, `per_page`]'), array('status' => 400));
     }
 
-    $sqlQuery = "
-							SELECT " . $table_prefix . "aryo_activity_log.hist_time as created_at,
-							" . $table_prefix . "users.user_nicename as name,
-							" . $table_prefix . "users.user_email as user,
-							" . $table_prefix . "aryo_activity_log.hist_ip as ip,
-							" . $table_prefix . "aryo_activity_log.object_type as topic,
-							" . $table_prefix . "aryo_activity_log.object_subtype as context,
-							" . $table_prefix . "aryo_activity_log.object_name as meta,
-							" . $table_prefix . "aryo_activity_log.action, " . $table_prefix . "aryo_activity_log.user_caps as role
-							FROM " . $table_prefix . "aryo_activity_log left join " . $table_prefix . "users on " . $table_prefix . "users.ID = " . $table_prefix . "aryo_activity_log.user_id WHERE 1
-						";
+    $sqlQuery = "SELECT " . $table_prefix . "aryo_activity_log.hist_time as created_at,
+                " . $table_prefix . "users.user_nicename as name,
+                " . $table_prefix . "users.user_email as user,
+                " . $table_prefix . "aryo_activity_log.hist_ip as ip,
+                " . $table_prefix . "aryo_activity_log.object_type as topic,
+                " . $table_prefix . "aryo_activity_log.object_subtype as context,
+                " . $table_prefix . "aryo_activity_log.object_name as meta,
+                " . $table_prefix . "aryo_activity_log.action, " . $table_prefix . "aryo_activity_log.user_caps as role
+                FROM " . $table_prefix . "aryo_activity_log left join " . $table_prefix . "users on " . $table_prefix . "users.ID = " . $table_prefix . "aryo_activity_log.user_id WHERE 1
+            ";
     $countSqlQuery    = "SELECT COUNT(" . $table_prefix . "aryo_activity_log.histid) AS total 
 							FROM " . $table_prefix . "aryo_activity_log left join " . $table_prefix . "users on " . $table_prefix . "users.id = " . $table_prefix . "aryo_activity_log.user_id
 							WHERE 1";
